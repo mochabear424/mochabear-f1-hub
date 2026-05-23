@@ -22,18 +22,23 @@ const RecordRow = ({ label, driver, constructor: cons, value }) => (
   </div>
 );
 
-export default function CircuitInfo() {
-  const [race, setRace] = useState(null);
+// race prop: when provided, component is driven externally (race-hub selector).
+// When omitted, component self-fetches the current/next race.
+export default function CircuitInfo({ race: raceProp = null }) {
+  const [race, setRace] = useState(raceProp);
   const [err, setErr] = useState(null);
 
+  // Sync when raceProp changes
   useEffect(() => {
+    if (raceProp) { setRace(raceProp); return; }
+    // Self-fetch only when no prop
     fetch("/api/schedule").then(r => r.json()).then(races => {
       if (races.error) { setErr(races.error); return; }
       const now = new Date();
       const next = races.find(r => new Date(`${r.date}T${r.time || "12:00:00Z"}`) > now) || races[races.length - 1];
       setRace(next);
     }).catch(e => setErr(e.message));
-  }, []);
+  }, [raceProp]);
 
   if (err) return null;
   if (!race) return null;
