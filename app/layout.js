@@ -1,5 +1,6 @@
 import "./globals.css";
 import Nav from "@/components/Nav";
+import { TimeProvider } from "@/context/TimeContext";
 
 export const viewport = { themeColor: "#080C10" };
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Archivo:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <TimeProvider>
         <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 18px 80px" }}>
           <Nav />
           {children}
@@ -37,6 +39,7 @@ export default function RootLayout({ children }) {
             Independent fan project — not affiliated with, endorsed by, or connected to Formula 1, the FIA, or any team. F1 and related marks are trademarks of Formula One Licensing B.V. Race data shown for informational purposes only.
           </footer>
         </div>
+        </TimeProvider>
       </body>
     </html>
   );

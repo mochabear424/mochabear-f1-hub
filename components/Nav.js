@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 const links = [
   ["/", "Home"], ["/race-hub", "Race Hub"], ["/calendar", "Calendar"],
@@ -22,27 +23,49 @@ export default function Nav() {
   }, []);
 
   return (
-    <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-      padding: "20px 0 18px", borderBottom: "1px solid var(--line)", position: "sticky", top: 0,
-      background: "linear-gradient(180deg,var(--bg) 70%,transparent)", zIndex: 20, backdropFilter: "blur(6px)", flexWrap: "wrap", gap: 12 }}>
+    <header style={{
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "20px 0 18px", borderBottom: "1px solid var(--line)",
+      position: "sticky", top: 0,
+      background: "linear-gradient(180deg,var(--bg) 70%,transparent)",
+      zIndex: 20, backdropFilter: "blur(6px)", flexWrap: "wrap", gap: 12
+    }}>
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 40, height: 40, borderRadius: 9, background: "linear-gradient(135deg,var(--red),#7a0300)",
-          display: "grid", placeItems: "center", fontFamily: "Archivo", fontWeight: 900, fontSize: 22,
-          boxShadow: "0 0 22px rgba(225,6,0,.45)" }}>M</div>
+        <div style={{ borderRadius: 8, boxShadow: "0 0 24px rgba(225,6,0,.5)" }}>
+          <Logo size={40} />
+        </div>
         <div>
-          <div style={{ fontFamily: "Archivo", fontWeight: 900, fontSize: 19, letterSpacing: ".06em", lineHeight: 1 }}>MOCHABEAR&apos;S F1 HUB</div>
-          <div style={{ fontFamily: "Rajdhani", fontSize: 11, letterSpacing: ".32em", color: "var(--mut)", textTransform: "uppercase" }}>Personal Paddock</div>
+          <div style={{ fontFamily: "Archivo", fontWeight: 900, fontSize: 19, letterSpacing: ".06em", lineHeight: 1 }}>
+            MOCHABEAR&apos;S F1 HUB
+          </div>
+          <div style={{ fontFamily: "Rajdhani", fontSize: 11, letterSpacing: ".32em", color: "var(--mut)", textTransform: "uppercase" }}>
+            Personal Paddock
+          </div>
         </div>
       </Link>
+
       <nav style={{ display: "flex", gap: 4, fontFamily: "Rajdhani", fontWeight: 600, fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase" }}>
         {links.map(([href, label]) => {
           const on = path === href;
-          return <Link key={href} href={href} style={{ color: on ? "var(--txt)" : "var(--mut)",
-            padding: "8px 13px", borderRadius: 7, background: on ? "var(--panel2)" : "transparent" }}>{label}</Link>;
+          return (
+            <Link key={href} href={href} style={{
+              color: on ? "var(--txt)" : "var(--mut)",
+              padding: "8px 13px", borderRadius: 7,
+              background: on ? "rgba(225,6,0,.12)" : "transparent",
+              boxShadow: on ? "inset 0 -2px 0 var(--red)" : "none",
+              transition: "color .15s, background .15s"
+            }}>
+              {label}
+            </Link>
+          );
         })}
       </nav>
-      <div style={{ fontFamily: "JetBrains Mono", fontSize: 11, color: "var(--accent)", border: "1px solid var(--line)",
-        padding: "5px 10px", borderRadius: 20, display: "flex", alignItems: "center", gap: 6 }}>
+
+      <div style={{
+        fontFamily: "JetBrains Mono", fontSize: 11, color: "var(--red)",
+        border: "1px solid rgba(225,6,0,.3)", padding: "5px 10px", borderRadius: 20,
+        display: "flex", alignItems: "center", gap: 6, background: "rgba(225,6,0,.06)"
+      }}>
         <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--grn)", boxShadow: "0 0 8px var(--grn)" }} />
         {badge}
       </div>
