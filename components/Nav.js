@@ -35,16 +35,25 @@ export default function Nav() {
           <Logo size={40} />
         </div>
         <div>
-          <div style={{ fontFamily: "Archivo", fontWeight: 900, fontSize: 19, letterSpacing: ".06em", lineHeight: 1 }}>
+          <div style={{
+            fontFamily: "Archivo", fontWeight: 900, fontSize: 19,
+            letterSpacing: ".06em", lineHeight: 1
+          }}>
             MOCHABEAR&apos;S F1 HUB
           </div>
-          <div style={{ fontFamily: "Rajdhani", fontSize: 11, letterSpacing: ".32em", color: "var(--mut)", textTransform: "uppercase" }}>
+          <div style={{
+            fontFamily: "Rajdhani", fontSize: 11, letterSpacing: ".32em",
+            color: "var(--mut)", textTransform: "uppercase"
+          }}>
             Personal Paddock
           </div>
         </div>
       </Link>
 
-      <nav style={{ display: "flex", gap: 4, fontFamily: "Rajdhani", fontWeight: 600, fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase" }}>
+      <nav style={{
+        display: "flex", gap: 4, fontFamily: "Rajdhani", fontWeight: 600,
+        fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase"
+      }}>
         {links.map(([href, label]) => {
           const on = path === href;
           return (
@@ -65,3 +74,13 @@ export default function Nav() {
         fontFamily: "JetBrains Mono", fontSize: 11, color: "var(--red)",
         border: "1px solid rgba(225,6,0,.3)", padding: "5px 10px", borderRadius: 20,
         display: "flex", alignItems: "center", gap: 6
+      }}>
+        <span style={{
+          width: 6, height: 6, borderRadius: "50%", background: "var(--red)",
+          boxShadow: "0 0 6px var(--red)", display: "inline-block"
+        }} />
+        {badge}
+      </div>
+    </header>
+  );
+}
