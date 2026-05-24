@@ -16,38 +16,58 @@ const teamColor = (t = "") => {
   return "#7C8A99";
 };
 
+// Tiny SVG sparkline — plots last-N finishing positions as a line chart.
+// Y axis is inverted: P1 = top, P20 = bottom. Lower numbers = better.
+function Sparkline({ positions, color }) {
+  if (!positions || positions.length < 2) return null;
+
+  const W = 52, H = 20, PAD = 2;
+  const n = positions.length;
+  const innerW = W - PAD * 2;
+  const innerH = H - PAD * 2;
+
+  // Map position 1–20 onto Y (P1 = PAD = top, P20 = PAD+innerH = bottom)
+  const y = pos => PAD + ((pos - 1) / 19) * innerH;
+  const x = i => PAD + (i / (n - 1)) * innerW;
+
+  const pts = positions.map((pos, i) => [x(i), y(pos)]);
+  const pathD = pts.map((p, i) => `${i === 0 ? "M" : "L"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+
+  return (
+    <svg width={W} height={H} style={{ flexShrink: 0 }}>
+      {/* Line */}
+      <path d={pathD} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
+      {/* Dots */}
+      {pts.map(([cx, cy], i) => (
+        <circle key={i} cx={cx} cy={cy} r="2" fill={color} opacity="0.9" />
+      ))}
+    </svg>
+  );
+}
+
 export default function Standings({ type = "drivers", limit }) {
   const [rows, setRows] = useState(null);
+  const [form, setForm] = useState(null);
   const [err, setErr] = useState(null);
+
   useEffect(() => {
-    fetch(`/api/${type}`).then(r => r.json()).then(d => {
-      if (d.error) setErr(d.error); else setRows(limit ? d.slice(0, limit) : d);
-    }).catch(e => setErr(e.message));
+    fetch(`/api/${type}`)
+      .then(r => r.json())
+      .then(d => {
+        if (d.error) setErr(d.error);
+        else setRows(limit ? d.slice(0, limit) : d);
+      })
+      .catch(e => setErr(e.message));
+
+    // Fetch form data (last 5 races) in parallel
+    fetch("/api/form")
+      .then(r => r.json())
+      .then(d => { if (!d.error) setForm(d); })
+      .catch(() => {});
   }, [type, limit]);
 
   if (err) return <div className="err">Standings unavailable: {err}</div>;
   if (!rows) return <div className="loading">⏳ Loading standings…</div>;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      {rows.map((x, i) => {
-        const isDriver = type === "drivers";
-        const team = isDriver ? x.Constructors[0].name : x.Constructor.name;
-        const name = isDriver ? `${x.Driver.givenName} ${x.Driver.familyName}` : x.Constructor.name;
-        const sub = isDriver ? team : x.Constructor.nationality;
-        const col = teamColor(team);
-        return (
-          <div key={i} style={{ display: "grid", gridTemplateColumns: "4px 26px 1fr auto", gap: 12, alignItems: "center", padding: "10px 8px", borderRadius: 8 }}>
-            <div style={{ width: 4, alignSelf: "stretch", borderRadius: 3, background: col }} />
-            <div style={{ fontFamily: "Archivo", fontWeight: 900, fontSize: 15, color: i === 0 ? "var(--gold)" : "var(--mut)", textAlign: "center" }}>{x.position}</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <span style={{ fontWeight: 600, fontSize: 14 }}>{name}</span>
-              <span style={{ fontFamily: "Rajdhani", fontWeight: 600, fontSize: 11, letterSpacing: ".06em", color: "var(--mut)", textTransform: "uppercase" }}>{sub}</span>
-            </div>
-            <div className="mono" style={{ fontWeight: 700, fontSize: 15 }}>{x.points}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+    <div style={{ display: "f

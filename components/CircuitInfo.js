@@ -102,11 +102,4 @@ export default function CircuitInfo({ race: raceProp = null }) {
       {/* Records */}
       {c.mostWinsDriver?.wins && (
         <div>
-          <div style={{ fontFamily: "Rajdhani", fontWeight: 700, fontSize: 11, letterSpacing: ".18em", color: "var(--mut)", textTransform: "uppercase", marginBottom: 4 }}>Circuit Records</div>
-          <RecordRow label="Most wins — driver" driver={c.mostWinsDriver.name} value={c.mostWinsDriver.wins} />
-          <RecordRow label="Most wins — constructor" driver={c.mostWinsConstructor.name} value={c.mostWinsConstructor.wins} />
-        </div>
-      )}
-    </div>
-  );
-}
+          <div style={{ fontFamily: "Rajdhani", fontWeight: 700, fontSize: 11, letterSpacing: ".18em", color: "var(--mut)", textTransform: "uppercase", marginBottom: 4 }}>Circuit R

@@ -36,11 +36,4 @@ export default function RootLayout({ children }) {
           {children}
           <footer style={{ marginTop: 40, paddingTop: 24, borderTop: "1px solid var(--line)", fontSize: 11, color: "var(--mut)", fontFamily: "Rajdhani", lineHeight: 1.6 }}>
             <strong style={{ color: "var(--txt)" }}>MOCHABEAR&apos;S F1 HUB</strong> · Personal dashboard · Data via the free Jolpica-F1 API &amp; Open-Meteo.<br />
-            Independent fan project — not affiliated with, endorsed by, or connected to Formula 1, the FIA, or any team. F1 and related marks are trademarks of Formula One Licensing B.V. Race data shown for informational purposes only.
-          </footer>
-        </div>
-        </TimeProvider>
-      </body>
-    </html>
-  );
-}
+            Independent fan project — not affiliated with, endorsed by, or connected to Formula 1, the FIA, or any team. F1 and related marks are trademarks of Formula One Licensing B.V. Race data shown for informational purpos

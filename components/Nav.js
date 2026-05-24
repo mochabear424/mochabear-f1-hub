@@ -64,11 +64,4 @@ export default function Nav() {
       <div style={{
         fontFamily: "JetBrains Mono", fontSize: 11, color: "var(--red)",
         border: "1px solid rgba(225,6,0,.3)", padding: "5px 10px", borderRadius: 20,
-        display: "flex", alignItems: "center", gap: 6, background: "rgba(225,6,0,.06)"
-      }}>
-        <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--grn)", boxShadow: "0 0 8px var(--grn)" }} />
-        {badge}
-      </div>
-    </header>
-  );
-}
+        display: "flex", alignItems: "center", gap: 6
